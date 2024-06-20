@@ -1,0 +1,5 @@
+dependencies:
+  espressif/ds18b20: "^0.1.1"
+  espressif/esp_mqtt_cxx: "^0.3.0"
+  zorxx/dht: "^1.0.1"
+  qrcode: "^0.1.0"
