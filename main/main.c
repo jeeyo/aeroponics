@@ -7,13 +7,13 @@
 #include "esp_event.h"
 #include "esp_dpp.h"
 #include "esp_log.h"
-#include "qrcode.h"
 #include "nvs_flash.h"
 
 static const char *TAG = "AEROPONICS";
 
 #define WATERTEMP_GPIO 0
 #define TEMPHUMID_GPIO 1
+#define FOGGER_GPIO    5
 
 void app_main(void)
 {
@@ -24,7 +24,7 @@ void app_main(void)
     ret = nvs_flash_init();
   }
   ESP_ERROR_CHECK(ret);
-  // dpp_enrollee_init();
+
   initialise_wifi();
 
   watertemp_t watertemp;
@@ -33,6 +33,10 @@ void app_main(void)
   // temphumid_t temphumid;
   // temphumid_init(&temphumid, TEMPHUMID_GPIO);
 
+  fogger_t fogger;
+  fogger_init(&fogger, FOGGER_GPIO);
+  fogger_write(&fogger, 1); // turn fogger on
+
   while (true)
   {
     vTaskDelay(pdMS_TO_TICKS(200));
@@ -40,6 +44,16 @@ void app_main(void)
     float water_temperature = 0.0f;
     watertemp_read(&watertemp, &water_temperature);
     ESP_LOGI(TAG, "Water temperature: %.2fC", water_temperature);
+
+    if (water_temperature > 28.6f) {
+      fogger_write(&fogger, 0);
+      ESP_LOGI(TAG, "Fogger off");
+    }
+
+    if (water_temperature < 27.0f) {
+      fogger_write(&fogger, 1);
+      ESP_LOGI(TAG, "Fogger on");
+    }
 
     // float environment_temperature = 0.0f;
     // float environment_humidity = 0.0f;

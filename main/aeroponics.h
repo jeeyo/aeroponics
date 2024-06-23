@@ -19,7 +19,13 @@ typedef struct {
 int temphumid_init(temphumid_t *temphumid, int gpio);                             // initialize a DHT11
 int temphumid_read(temphumid_t *temphumid, float *temperature, float *humidity);  // return temperature in Celsius and relative humidity in %
 
-// void dpp_enrollee_init(void);
+typedef struct {
+  int gpio;
+} fogger_t;
+
+int fogger_init(fogger_t *fogger, int gpio);
+void fogger_write(fogger_t *fogger, int onoff);
+
 void initialise_wifi(void);
 
 #endif /* _AEROPONICS_H */
