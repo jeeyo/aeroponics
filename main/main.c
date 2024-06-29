@@ -3,9 +3,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_system.h"
-#include "esp_wifi.h"
-#include "esp_event.h"
-#include "esp_dpp.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
 
@@ -25,7 +22,7 @@ void app_main(void)
   }
   ESP_ERROR_CHECK(ret);
 
-  initialise_wifi();
+  // initialise_wifi();
 
   watertemp_t watertemp;
   watertemp_init(&watertemp, WATERTEMP_GPIO);
@@ -35,7 +32,6 @@ void app_main(void)
 
   fogger_t fogger;
   fogger_init(&fogger, FOGGER_GPIO);
-  fogger_write(&fogger, 1); // turn fogger on
 
   while (true)
   {
@@ -45,15 +41,15 @@ void app_main(void)
     watertemp_read(&watertemp, &water_temperature);
     ESP_LOGI(TAG, "Water temperature: %.2fC", water_temperature);
 
-    if (water_temperature > 28.6f) {
-      fogger_write(&fogger, 0);
-      ESP_LOGI(TAG, "Fogger off");
-    }
+    // if (water_temperature > 28.6f) {
+    //   fogger_write(&fogger, 0);
+    //   ESP_LOGI(TAG, "Fogger off");
+    // }
 
-    if (water_temperature < 27.0f) {
-      fogger_write(&fogger, 1);
-      ESP_LOGI(TAG, "Fogger on");
-    }
+    // if (water_temperature < 27.0f) {
+    //   fogger_write(&fogger, 1);
+    //   ESP_LOGI(TAG, "Fogger on");
+    // }
 
     // float environment_temperature = 0.0f;
     // float environment_humidity = 0.0f;
