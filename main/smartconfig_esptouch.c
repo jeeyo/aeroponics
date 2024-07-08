@@ -21,7 +21,7 @@ static EventGroupHandle_t s_wifi_event_group;
    to the AP with an IP? */
 static const int CONNECTED_BIT = BIT0;
 static const int ESPTOUCH_DONE_BIT = BIT1;
-static const char *TAG = "smartconfig_example";
+static const char *TAG = "WIFI SMARTCONFIG";
 
 static void smartconfig_example_task(void *parm);
 
