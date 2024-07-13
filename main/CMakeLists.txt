@@ -4,4 +4,5 @@ idf_component_register(
         "watertemp_ds18b20.c"
         "temphumid_dht11.c"
         "fogger_gpio.c"
+        "mqtt_client.c"
   INCLUDE_DIRS ".")

@@ -3,6 +3,7 @@
 
 #include "onewire_bus.h"
 #include "ds18b20.h"
+#include "mqtt_client.h"
 
 typedef struct {
   onewire_device_t onewire_device;
@@ -27,5 +28,15 @@ int fogger_init(fogger_t *fogger, int gpio);
 void fogger_write(fogger_t *fogger, int onoff);
 
 void initialise_wifi(void);
+
+#define MQTT_BROKER_URL "mqtt://192.168.1.43"
+
+typedef struct {
+  esp_mqtt_client_handle_t handle;
+} mqtt_client_t;
+
+void mqtt_client_init(mqtt_client_t *client);
+int mqtt_client_publish(mqtt_client_t *client, const char *topic, const char *data, int data_len, int qos);
+int mqtt_is_connected();
 
 #endif /* _AEROPONICS_H */
